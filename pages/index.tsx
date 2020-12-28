@@ -24,8 +24,6 @@ export default function Home() {
   const [isBetUp, setIsBetUp] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  const cards = []
-
   function shuffleCards() {
     fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1').then(
       async (response) => {
