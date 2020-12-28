@@ -161,6 +161,33 @@ export const CardWrapper = styled.div`
   min-height: 315px;
 `
 
+const bounce = keyframes`
+  from, 20%, 53%, 80%, to {
+    transform: translate3d(0,0,0);
+  }
+
+  40%, 43% {
+    transform: translate3d(0, -30px, 0);
+  }
+
+  70% {
+    transform: translate3d(0, -15px, 0);
+  }
+
+  90% {
+    transform: translate3d(0,-4px,0);
+  }
+`
+
+const fadeIn = keyframes`
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
+`
+
 export const Button = styled.button`
   cursor: pointer !important;
   display: inline-block !important;
@@ -182,9 +209,13 @@ export const Button = styled.button`
     -webkit-transform 0.1s ease 0s, transform 0.1s ease 0s !important;
   border: none !important;
   background: rgb(34, 34, 34) !important;
+  /* background: hsl(175, 100%, 34%); */
+  opacity: 1;
+  /* background-image: linear-gradient(to top left, #fff, #e52e71) !important; */
   color: rgb(255, 255, 255) !important;
   min-width: 100%;
   :hover {
-    background-image: linear-gradient(to top left, #ff8a00, #e52e71) !important;
+    animation: 0.4s ${fadeIn} ease-out;
+    opacity: 0.6;
   }
 `

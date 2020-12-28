@@ -22,6 +22,7 @@ export default function Home() {
   const [prevCard, setPrevCard] = useState<Card>()
   const [card, setCard] = useState<Card>()
   const [isBetUp, setIsBetUp] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const cards = []
 
@@ -39,6 +40,7 @@ export default function Home() {
   }
 
   function drawCard() {
+    setIsLoading(true)
     fetch(
       `https://deckofcardsapi.com/api/deck/${deck.deck_id}/draw/?count=1`
     ).then(async (response) => {
@@ -47,9 +49,9 @@ export default function Home() {
         const cardDraw = data.cards[0]
         if (cardDraw) {
           const reducedCard = cardReducer(cardDraw)
-          console.log(reducedCard)
           setPrevCard(card)
           setCard(reducedCard)
+          setIsLoading(false)
         } else {
           return Promise.reject(new Error(`No card drawn"`))
         }
@@ -91,6 +93,7 @@ export default function Home() {
 
   function compareCards() {
     if (!prevCard) return 'Please bet on a card'
+    if (isLoading) return '...'
 
     const { index: prevIndex } = prevCard
     const { index: currentIndex } = card
