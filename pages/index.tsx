@@ -1,7 +1,6 @@
-import React from "react"
-import Image from "next/image"
-import styles from "../styles/Home.module.css"
-import Layout from "../components/layout"
+import { useState, useEffect } from 'react'
+import Layout from '../components/layout'
+import { Main, CardWrapper, Button } from '../styles'
 
 interface Deck {
   success: boolean
@@ -21,14 +20,14 @@ export default function Home() {
   // creating this property to avoid reshuffle on each rerender
   const lazyShuffle = true
 
-  const [deck, setDeck] = React.useState<Deck>()
-  const [prevCard, setPrevCard] = React.useState<Card>()
-  const [card, setCard] = React.useState<Card>()
-  const [isBetUp, setIsBetUp] = React.useState<boolean>(false)
+  const [deck, setDeck] = useState<Deck>()
+  const [prevCard, setPrevCard] = useState<Card>()
+  const [card, setCard] = useState<Card>()
+  const [isBetUp, setIsBetUp] = useState<boolean>(false)
 
   function shuffleCards() {
     window
-      .fetch("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1")
+      .fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
       .then(async (response) => {
         const data = await response.json()
         if (data.success) {
@@ -38,7 +37,6 @@ export default function Home() {
   }
 
   function drawCard() {
-    console.log(deck.deck_id)
     window
       .fetch(
         `https://deckofcardsapi.com/api/deck/${deck.deck_id}/draw/?count=1`
@@ -71,53 +69,39 @@ export default function Home() {
     const cardCode = card.code
     if (isBetUp) {
       if (prevCardCode < cardCode) {
-        return "you win"
+        return 'you win'
       } else {
-        return "you lose"
+        return 'you lose'
       }
     } else {
       if (prevCardCode > cardCode) {
-        return "you win"
+        return 'you win'
       } else {
-        return "you lose"
+        return 'you lose'
       }
     }
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     shuffleCards()
   }, [lazyShuffle])
 
+  useEffect(() => {
+    if (deck?.deck_id) {
+      drawCard()
+    }
+  }, [deck])
+
   return (
     <Layout>
-      <main className={styles.main}>
-        <div>
-          <p>{prevCard ? compareCards() : "Please bet on a card"}</p>
-        </div>
-        <div className={styles.grid}>
-          {card ? (
-            <div className={styles.card}>
-              <p>{card.value}</p>
-              <p>{card.suit}</p>
-              <p>{card.code}</p>
-              <Image
-                src={card.image}
-                alt={card.value}
-                width={500}
-                height={500}
-              />
-            </div>
-          ) : (
-            <div>
-              <p>Please bet on a card</p>
-            </div>
-          )}
-          <button className={styles.card} onClick={drawCard}>
-            UP
-          </button>
-          <button className={styles.card}>DOWN</button>
-        </div>
-      </main>
+      <Main>
+        <p>{prevCard ? compareCards() : 'Please bet on a card'}</p>
+        <CardWrapper>
+          {card ? <img src={card.image} alt={card.value} /> : <p>Loading...</p>}
+        </CardWrapper>
+        <Button onClick={betUp}>Bet Up</Button>
+        <Button onClick={betDown}>Bet Down</Button>
+      </Main>
     </Layout>
   )
 }

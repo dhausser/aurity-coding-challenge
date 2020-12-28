@@ -1,4 +1,28 @@
-import { css } from "@emotion/react"
+import { css, Global, keyframes } from '@emotion/react'
+import styled from '@emotion/styled'
+
+export const globalStyles = (
+  <Global
+    styles={css`
+      html,
+      body {
+        padding: 0;
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+          Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+    `}
+  />
+)
 
 export const container = css`
   min-height: 100vh;
@@ -9,6 +33,10 @@ export const container = css`
   align-items: center;
 `
 
+export const Container = styled.div`
+  ${container}
+`
+
 export const main = css`
   padding: 5rem 0;
   flex: 1;
@@ -16,6 +44,10 @@ export const main = css`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+`
+
+export const Main = styled.div`
+  ${main}
 `
 
 export const footer = css`
@@ -80,6 +112,10 @@ export const grid = css`
   }
 `
 
+export const Grid = styled.div`
+  ${grid}
+`
+
 export const card = css`
   margin: 1rem;
   flex-basis: 45%;
@@ -109,6 +145,48 @@ export const card = css`
   }
 `
 
+export const Card = styled.div`
+  ${card}
+`
+
 export const logo = css`
   height: 1em;
+`
+
+export const CardWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: center;
+  margin: 1rem auto !important;
+  min-width: 225.85px;
+  min-height: 315px;
+`
+
+export const Button = styled.button`
+  cursor: pointer !important;
+  display: inline-block !important;
+  margin: 1rem auto !important;
+  position: relative !important;
+  text-align: center !important;
+  text-decoration: none !important;
+  width: auto !important;
+  touch-action: manipulation !important;
+  font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto,
+    'Helvetica Neue', sans-serif !important;
+  font-size: 16px !important;
+  line-height: 20px !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  outline: none !important;
+  padding: 14px 24px !important;
+  transition: box-shadow 0.2s ease 0s, -ms-transform 0.1s ease 0s,
+    -webkit-transform 0.1s ease 0s, transform 0.1s ease 0s !important;
+  border: none !important;
+  background: rgb(34, 34, 34) !important;
+  color: rgb(255, 255, 255) !important;
+  min-width: 100%;
+  :hover {
+    background-image: linear-gradient(to top left, #ff8a00, #e52e71) !important;
+  }
 `
