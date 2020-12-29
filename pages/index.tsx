@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { css } from '@emotion/react'
 import Layout from '../components/layout'
 import { Main, CardWrapper, Button } from '../styles'
 

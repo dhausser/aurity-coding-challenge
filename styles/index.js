@@ -4,6 +4,16 @@ import styled from '@emotion/styled'
 export const globalStyles = (
   <Global
     styles={css`
+      :root {
+        --main-bg-color: brown;
+        --color-button-black: rgb(34, 34, 34);
+        --color-gradient: linear-gradient(to top left, #fff, #e52e71);
+        --colorTealDarkest: hsl(175, 73%, 19%);
+        --colorTealDarker: hsl(175, 73%, 30%);
+        --colorTeal: hsl(175, 100%, 34%);
+        --colorTealLighter: hsl(175, 100%, 39%);
+        --colorTealLightest: hsl(175, 51%, 86%);
+      }
       html,
       body {
         padding: 0;
@@ -161,24 +171,6 @@ export const CardWrapper = styled.div`
   min-height: 315px;
 `
 
-const bounce = keyframes`
-  from, 20%, 53%, 80%, to {
-    transform: translate3d(0,0,0);
-  }
-
-  40%, 43% {
-    transform: translate3d(0, -30px, 0);
-  }
-
-  70% {
-    transform: translate3d(0, -15px, 0);
-  }
-
-  90% {
-    transform: translate3d(0,-4px,0);
-  }
-`
-
 const fadeIn = keyframes`
   0% {
     opacity: 1;
@@ -208,10 +200,8 @@ export const Button = styled.button`
   transition: box-shadow 0.2s ease 0s, -ms-transform 0.1s ease 0s,
     -webkit-transform 0.1s ease 0s, transform 0.1s ease 0s !important;
   border: none !important;
-  background: rgb(34, 34, 34) !important;
-  /* background: hsl(175, 100%, 34%); */
+  background: var(--color-button-black) !important;
   opacity: 1;
-  /* background-image: linear-gradient(to top left, #fff, #e52e71) !important; */
   color: rgb(255, 255, 255) !important;
   min-width: 100%;
   :hover {
