@@ -180,7 +180,7 @@ const fadeIn = keyframes`
   }
 `
 
-export const Button = styled.button`
+export const StyledButton = styled.button`
   cursor: pointer !important;
   display: inline-block !important;
   margin: 1rem auto !important;

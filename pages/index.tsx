@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { css } from '@emotion/react'
 import Layout from '../components/layout'
-import { Main, CardWrapper, Button } from '../styles'
+import { Button } from '../components/button'
+import { Main, CardWrapper } from '../styles'
 
 interface Deck {
   success: boolean
@@ -38,19 +39,20 @@ export default function Home() {
     )
   }
 
-  function drawCard() {
+  async function drawCard() {
     setIsLoading(true)
     fetch(
       `https://deckofcardsapi.com/api/deck/${deck.deck_id}/draw/?count=1`
     ).then(async (response) => {
       const data = await response.json()
       if (data.success) {
-        const cardDraw = data.cards[0]
-        if (cardDraw) {
-          const reducedCard = cardReducer(cardDraw)
+        const newCard = data.cards[0]
+        if (newCard) {
+          const cardWithIndex = cardReducer(newCard)
           setPrevCard(card)
-          setCard(reducedCard)
+          setCard(cardWithIndex)
           setIsLoading(false)
+          return cardWithIndex
         } else {
           return Promise.reject(new Error(`No card drawn"`))
         }
@@ -83,11 +85,6 @@ export default function Home() {
     }
 
     return { ...card, index }
-  }
-
-  function bet(value) {
-    setIsBetUp(value === 'up' ? true : false)
-    drawCard()
   }
 
   function compareCards() {
@@ -140,8 +137,12 @@ export default function Home() {
         <CardWrapper>
           {card ? <img src={card.image} alt={card.value} /> : <p>Loading...</p>}
         </CardWrapper>
-        <Button onClick={() => bet('up')}>Bet Up ⬆</Button>
-        <Button onClick={() => bet('down')}>Bet Down ⬇</Button>
+        <Button name="up" setIsBetUp={setIsBetUp} drawCard={drawCard}>
+          Bet Up ⬆
+        </Button>
+        <Button name="down" setIsBetUp={setIsBetUp} drawCard={drawCard}>
+          Bet Down ⬇
+        </Button>
       </Main>
     </Layout>
   )
