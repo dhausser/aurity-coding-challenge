@@ -1,9 +1,31 @@
-import { useState, useEffect, useReducer } from 'react'
-import Layout from '../components/layout'
+import { useState, useReducer } from 'react'
+import { Layout } from '../components/layout'
+import { Button } from '../components/button'
 import { useCard, useDeck } from '../hooks'
-import { fetchCard } from '../utils'
+import { calculateWin } from '../utils'
+import { FetchState, Card } from '../types'
 import { Main, CardWrapper } from '../styles'
-import { FetchState } from '../types'
+
+function reducer(state, action: { type: string; payload: Card }) {
+  switch (action.type) {
+    case 'up':
+      return {
+        status: calculateWin(state.card.index, action.payload.index, true),
+        card: action.payload,
+        error: null,
+      }
+    case 'down':
+      return {
+        status: calculateWin(state.card.index, action.payload.index, false),
+        card: action.payload,
+        error: null,
+      }
+    case 'init':
+      return { status: 'Bet Up or Down', card: action.payload, error: null }
+    default:
+      throw new Error()
+  }
+}
 
 export default function Home() {
   const [deckState, setDeckState] = useState<FetchState>({
@@ -11,51 +33,26 @@ export default function Home() {
     deck: null,
     error: null,
   })
-  const initialState = { status: 'pending', card: null, error: null }
+  const initialState = { status: 'loading', card: null, error: null }
   const [state, dispatch] = useReducer(reducer, initialState)
   const { card } = state
-
-  function reducer(state, action: { type: string; payload: any }) {
-    let card = null
-    switch (action.type) {
-      case 'up':
-        console.log(action.payload)
-        return { status: 'resolved', card: action.payload, error: null }
-      case 'down':
-        console.log(action.payload)
-        return { status: 'resolved', card: action.payload, error: null }
-      case 'init':
-        return { status: 'resolved', card: action.payload, error: null }
-      case 'error':
-        return { status: 'rejected', card: null, error: action.payload }
-      default:
-        throw new Error()
-    }
-  }
 
   useDeck(setDeckState)
   useCard(deckState, dispatch)
 
   return (
     <Layout>
+      <h1>{state.status}</h1>
       <Main>
         <CardWrapper>
           {card ? <img src={card.image} alt={card.value} /> : <p>Loading...</p>}
         </CardWrapper>
-        <button
-          onClick={async () =>
-            dispatch({ type: 'up', payload: await fetchCard() })
-          }
-        >
+        <Button name="up" dispatch={dispatch}>
           Up
-        </button>
-        <button
-          onClick={async () =>
-            dispatch({ type: 'down', payload: await fetchCard() })
-          }
-        >
+        </Button>
+        <Button name="down" dispatch={dispatch}>
           Down
-        </button>
+        </Button>
       </Main>
     </Layout>
   )

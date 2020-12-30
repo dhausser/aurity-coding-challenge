@@ -20,7 +20,7 @@ export function fetchCard(deckId = 'new'): Promise<Card> {
     const data = await response.json()
     if (response.ok) {
       const [card] = data.cards
-      card.index = getCardIndex(card.code.charAt(0))
+      card.index = parseCardValue(card.value)
       return card
     } else {
       return Promise.reject(new Error(`No card drawn`))
@@ -28,51 +28,34 @@ export function fetchCard(deckId = 'new'): Promise<Card> {
   })
 }
 
-export function getCardIndex(char): number {
-  switch (char) {
-    case 'A':
+export function parseCardValue(value): number {
+  switch (value) {
+    case 'ACE':
       return 14
       break
-    case 'K':
+    case 'KING':
       return 13
       break
-    case 'Q':
+    case 'QUEEN':
       return 12
       break
-    case 'J':
+    case 'JACK':
       return 11
       break
-    case '0':
-      return 10
-      break
     default:
-      return parseInt(char as string, 10)
+      return parseInt(value as string, 10)
   }
 }
 
-export function compareCards(isLoading, prevCard, card, isBetUp): string {
-  if (!prevCard) return 'Please bet on a card'
-  if (isLoading) return '...'
-
-  const { index: prevIndex } = prevCard
-  const { index: currentIndex } = card
-
-  if (prevIndex === currentIndex) return 'Draw, play again ♻️'
-
-  const victory = 'You win 🎉'
-  const failure = 'You lose 🙈'
-
-  if (isBetUp) {
-    if (prevIndex < currentIndex) {
-      return victory
-    } else {
-      return failure
-    }
-  } else {
-    if (prevIndex > currentIndex) {
-      return victory
-    } else {
-      return failure
-    }
+export function calculateWin(
+  prevIndex: number,
+  index: number,
+  isBetUp: boolean
+): string {
+  if (prevIndex === index) return 'Draw, play again ♻️'
+  if (!prevIndex) return 'Please bet on a card'
+  if ((prevIndex < index && isBetUp) || (prevIndex > index && !isBetUp)) {
+    return 'You win 🎉'
   }
+  return 'You lose 🙈'
 }
