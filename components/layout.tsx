@@ -1,5 +1,5 @@
-import Header from './header'
-import { Container } from '../styles'
+import Header from 'components/header'
+import { Container } from 'styles'
 
 export function Layout({ children }) {
   return (

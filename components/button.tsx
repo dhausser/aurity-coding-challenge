@@ -1,5 +1,5 @@
-import { StyledButton } from '../styles'
-import { fetchCard } from '../utils'
+import { StyledButton } from 'styles'
+import { fetchCard } from 'utils'
 
 export function Button({ name, dispatch, children }) {
   async function handleClick() {

@@ -1,10 +1,10 @@
 import { useState, useReducer } from 'react'
-import { Layout } from '../components/layout'
-import { Button } from '../components/button'
-import { useCard, useDeck } from '../hooks'
-import { calculateWin } from '../utils'
-import { FetchState, Card } from '../types'
-import { Main, CardWrapper } from '../styles'
+import { Layout } from 'components/layout'
+import { Button } from 'components/button'
+import { useCard, useDeck } from 'hooks'
+import { calculateWin } from 'utils'
+import { FetchState, Card } from 'types'
+import { Main, CardWrapper } from 'styles'
 
 function reducer(state, action: { type: string; payload: Card }) {
   switch (action.type) {
