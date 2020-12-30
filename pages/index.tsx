@@ -4,7 +4,6 @@ import { Button } from 'components/button'
 import { useCard, useDeck } from 'hooks'
 import { calculateWin } from 'utils'
 import { FetchState, Card } from 'types'
-import { Main, CardWrapper } from 'styles'
 
 function reducer(state, action: { type: string; payload: Card }) {
   switch (action.type) {
@@ -43,17 +42,17 @@ export default function Home() {
   return (
     <Layout>
       <h1>{state.status}</h1>
-      <Main>
-        <CardWrapper>
+      <div className="main">
+        <div className="card-wrapper">
           {card ? <img src={card.image} alt={card.value} /> : <p>Loading...</p>}
-        </CardWrapper>
+        </div>
         <Button name="up" dispatch={dispatch}>
           Up
         </Button>
         <Button name="down" dispatch={dispatch}>
           Down
         </Button>
-      </Main>
+      </div>
     </Layout>
   )
 }

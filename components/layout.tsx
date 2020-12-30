@@ -1,11 +1,10 @@
 import Header from 'components/header'
-import { Container } from 'styles'
 
 export function Layout({ children }) {
   return (
-    <Container>
+    <div className="container">
       <Header />
       {children}
-    </Container>
+    </div>
   )
 }
