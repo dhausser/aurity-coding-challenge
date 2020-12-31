@@ -1,28 +1,39 @@
 import { useReducer } from 'react'
 import { calculateWin } from 'utils'
-import { Deck, Card } from 'types'
+import { GameState, GameAction } from 'types'
 
-function reducer(
-  state,
-  action: { type: string; card: Card; deck: Deck; error: Error }
-) {
+function reducer(state: GameState, action: GameAction) {
   switch (action.type) {
     case 'up':
       return {
+        ...state,
         status: calculateWin(state.card.index, action.card.index, true),
         card: action.card,
       }
     case 'down':
       return {
+        ...state,
         status: calculateWin(state.card.index, action.card.index, false),
         card: action.card,
       }
     case 'init':
-      return { status: 'Bet Up or Down', card: action.card }
+      return {
+        ...state,
+        status: 'Bet Up or Down',
+        card: action.card,
+      }
     case 'deck':
-      return { status: 'Shuffling deck', deck: action.deck }
+      return {
+        ...state,
+        status: 'Shuffling deck',
+        deck: action.deck,
+      }
     case 'error':
-      return { status: 'Error', error: action.error }
+      return {
+        ...state,
+        status: 'Error',
+        error: action.error,
+      }
     default:
       throw new Error()
   }

@@ -1,4 +1,4 @@
-import { Deck, Card } from './types'
+import { Deck, CardWithIndex } from './types'
 
 export function fetchDeck(): Promise<Deck> {
   return fetch(
@@ -13,7 +13,7 @@ export function fetchDeck(): Promise<Deck> {
   })
 }
 
-export function fetchCard(deckId = 'new'): Promise<Card> {
+export function fetchCard(deckId = 'new'): Promise<CardWithIndex> {
   return fetch(
     `https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=1`
   ).then(async (response) => {

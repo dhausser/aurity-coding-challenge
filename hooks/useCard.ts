@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
 import { fetchCard } from 'utils'
-import { useGame } from 'hooks/useGame'
 
 export function useCard(state, dispatch) {
   useEffect(() => {
@@ -22,7 +21,7 @@ export function useCard(state, dispatch) {
         })
       }
     }
-    if (state?.deck?.deck_id) {
+    if (state.deck?.deck_id) {
       initCard()
     }
   }, [state.deck])

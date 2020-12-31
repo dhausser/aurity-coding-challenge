@@ -14,6 +14,8 @@ export function Game() {
   return (
     <>
       <h1>{state.status}</h1>
+      <p>Deck: {state.deck?.deck_id}</p>
+      <p>Card: {state.card?.value}</p>
       <div className="main">
         <div className="card-wrapper">
           {state.card ? (

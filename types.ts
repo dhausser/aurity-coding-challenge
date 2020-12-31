@@ -1,10 +1,3 @@
-export interface FetchState {
-  status: string
-  deck?: Deck
-  card?: Card
-  error: Error | null
-}
-
 export interface Deck {
   success: boolean
   deck_id: string
@@ -17,5 +10,22 @@ export interface Card {
   value: string
   suit: string
   code: string
-  index?: number
+}
+
+export interface CardWithIndex extends Card {
+  index: number
+}
+
+export interface Game {
+  deck: Deck
+  card: CardWithIndex
+  error: Error
+}
+
+export interface GameState extends Game {
+  status: string
+}
+
+export interface GameAction extends Game {
+  type: string
 }
