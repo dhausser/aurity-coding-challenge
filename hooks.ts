@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { fetchDeck, fetchCard } from './utils'
 
-export async function useDeck(setDeckState) {
+export function useDeck(setDeckState) {
   useEffect(() => {
     fetchDeck().then(
       (deck) => {
@@ -14,7 +14,7 @@ export async function useDeck(setDeckState) {
   }, [])
 }
 
-export async function useDeckAsync(setDeckState) {
+export function useDeckAsync(setDeckState) {
   useEffect(() => {
     async function initDeck() {
       setDeckState({ status: 'resolved', deck: await fetchDeck(), error: null })
@@ -44,13 +44,14 @@ export function useCard(deckState, dispatch) {
   }, [deckState])
 }
 
-export function useCardAsync(deckState, dispatch) {
+export function useCardAsync(state, dispatch) {
   useEffect(() => {
     async function initCard() {
-      dispatch({ type: 'init', payload: await fetchCard() })
+      dispatch({
+        type: 'init',
+        payload: await fetchCard(state.deck.deck_id),
+      })
     }
-    if (deckState.deck) {
-      initCard()
-    }
-  }, [deckState])
+    initCard()
+  }, [])
 }
