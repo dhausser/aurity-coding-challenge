@@ -6,10 +6,10 @@ export function Game() {
   const [state, dispatch] = useGame()
 
   // Fetch the initial deck and shuffle it
-  useDeck()
+  useDeck(dispatch)
 
   // Fetch the initial card
-  useCard()
+  useCard(state, dispatch)
 
   return (
     <>

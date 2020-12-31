@@ -2,8 +2,7 @@ import { useEffect } from 'react'
 import { fetchCard } from 'utils'
 import { useGame } from 'hooks/useGame'
 
-export function useCard() {
-  const [state, dispatch] = useGame()
+export function useCard(state, dispatch) {
   useEffect(() => {
     async function initCard() {
       try {
