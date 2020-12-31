@@ -6,7 +6,6 @@ export function useDeck(dispatch) {
     async function initDeck() {
       try {
         const deck = await fetchDeck()
-        console.log(deck)
         dispatch({
           type: 'deck',
           deck,
